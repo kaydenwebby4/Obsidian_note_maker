@@ -9,15 +9,23 @@ OUT_DIR_NAME = "Practice"
 
 
 
-PROMPT = """You are a study assistant. From the notes below, write {n} practice \
+PROMPT = """You are a study assistant. From the notes below, write exactly {n} practice \
 questions, each followed by a worked answer.
 
 Rules:
+- Write exactly {n} questions. Numbered Q1 to Q{n}. Do not stop early
 - Try to only use information from the notes.
-- Write maths in LaTeX: $...$ inline, $$...$$ for display.
+- Write answers in plain text, Use LaTeX($..$) only for math.
+- Do include any links or URLs
 - Format exactly like this:
 
+
 ### Q1
+Question text
+
+**Answer:** worked answer
+
+### Q2
 Question text
 
 **Answer:** worked answer
@@ -76,7 +84,7 @@ def main() -> None:
     ap = argparse.ArgumentParser(description="Generate practice questions from Obsidian notes.")
     ap.add_argument("folder", type=Path, help="vault or class folder to scan")
     ap.add_argument("--model", default="qwen2.5:7b")
-    ap.add_argument("--questions", type=int, default=5, help="questions per chunk")
+    ap.add_argument("--questions", type=int, default=5, help="questions per note")
     ap.add_argument("--force", action="store_true", help="regenerate existing files")
     args = ap.parse_args()
 
